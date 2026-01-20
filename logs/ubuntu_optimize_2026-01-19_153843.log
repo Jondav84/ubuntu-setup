@@ -1,0 +1,141 @@
+=== Ubuntu baseline optimization start ===
+Time: 2026-01-19T15:38:43-08:00
+Host: AlphaCodex
+Kernel: 6.14.0-37-generic
+
+[A] Update system and install baseline packages...
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Hit:1 https://www.synaptics.com/sites/default/files/Ubuntu stable InRelease
+Get:2 http://security.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+Hit:3 http://us.archive.ubuntu.com/ubuntu noble InRelease
+Get:4 http://us.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+Hit:5 https://esm.ubuntu.com/apps/ubuntu noble-apps-security InRelease
+Get:6 http://us.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+Hit:7 https://esm.ubuntu.com/apps/ubuntu noble-apps-updates InRelease
+Get:8 http://us.archive.ubuntu.com/ubuntu noble-updates/main amd64 Components [175 kB]
+Hit:9 https://esm.ubuntu.com/infra/ubuntu noble-infra-security InRelease
+Get:10 http://us.archive.ubuntu.com/ubuntu noble-updates/main amd64 c-n-f Metadata [16.0 kB]
+Get:11 http://us.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Components [212 B]
+Get:12 http://us.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Components [377 kB]
+Get:13 http://security.ubuntu.com/ubuntu noble-security/main amd64 Components [21.5 kB]
+Get:14 http://us.archive.ubuntu.com/ubuntu noble-updates/universe amd64 c-n-f Metadata [31.5 kB]
+Hit:15 https://esm.ubuntu.com/infra/ubuntu noble-infra-updates InRelease
+Get:16 http://us.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Components [940 B]
+Get:17 http://us.archive.ubuntu.com/ubuntu noble-backports/main amd64 Components [7312 B]
+Get:18 http://us.archive.ubuntu.com/ubuntu noble-backports/restricted amd64 Components [216 B]
+Get:19 http://us.archive.ubuntu.com/ubuntu noble-backports/universe amd64 Components [10.5 kB]
+Get:20 http://us.archive.ubuntu.com/ubuntu noble-backports/multiverse amd64 Components [212 B]
+Get:21 http://security.ubuntu.com/ubuntu noble-security/main amd64 c-n-f Metadata [9772 B]
+Get:22 http://security.ubuntu.com/ubuntu noble-security/restricted amd64 Components [212 B]
+Get:23 http://security.ubuntu.com/ubuntu noble-security/universe amd64 Components [74.2 kB]
+Get:24 http://security.ubuntu.com/ubuntu noble-security/universe Icons (48x48) [49.8 kB]
+Get:25 http://security.ubuntu.com/ubuntu noble-security/universe Icons (64x64) [78.3 kB]
+Get:26 http://security.ubuntu.com/ubuntu noble-security/multiverse amd64 Components [212 B]
+Fetched 1232 kB in 2s (749 kB/s)
+Reading package lists...
+Building dependency tree...
+Reading state information...
+1 package can be upgraded. Run 'apt list --upgradable' to see it.
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Reading package lists...
+Building dependency tree...
+Reading state information...
+Calculating upgrade...
+The following packages were automatically installed and are no longer required:
+  libgl1-amber-dri libglapi-mesa libllvm19
+Use 'sudo apt autoremove' to remove them.
+The following packages have been kept back:
+  libgl1-amber-dri
+0 upgraded, 0 newly installed, 0 to remove and 1 not upgraded.
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Reading package lists...
+Building dependency tree...
+Reading state information...
+git is already the newest version (1:2.43.0-1ubuntu7.3).
+curl is already the newest version (8.5.0-2ubuntu10.6).
+wget is already the newest version (1.21.4-1ubuntu4.1).
+unzip is already the newest version (6.0-28ubuntu4.1).
+zip is already the newest version (3.0-13ubuntu0.2).
+ca-certificates is already the newest version (20240203).
+gnupg is already the newest version (2.4.4-2ubuntu17.4).
+build-essential is already the newest version (12.10ubuntu1).
+pkg-config is already the newest version (1.8.1-2build1).
+python3 is already the newest version (3.12.3-0ubuntu2.1).
+python3-pip is already the newest version (24.0+dfsg-1ubuntu1.3).
+python3-venv is already the newest version (3.12.3-0ubuntu2.1).
+pipx is already the newest version (1.4.3-1).
+htop is already the newest version (3.3.0-4build1).
+iotop is already the newest version (0.6-42-ga14256a-0.2build1).
+iftop is already the newest version (1.0~pre4-9build2).
+lm-sensors is already the newest version (1:3.6.0-9build1).
+smartmontools is already the newest version (7.4-2build1).
+network-manager is already the newest version (1.46.0-1ubuntu2.5).
+fonts-firacode is already the newest version (6.2-2).
+The following packages were automatically installed and are no longer required:
+  libgl1-amber-dri libglapi-mesa libllvm19
+Use 'sudo apt autoremove' to remove them.
+0 upgraded, 0 newly installed, 0 to remove and 1 not upgraded.
+
+[B] Enable useful services...
+
+[C] Display/graphics status checks...
+● displaylink-driver.service - DisplayLink Driver Service
+     Loaded: loaded (/usr/lib/systemd/system/displaylink-driver.service; static)
+     Active: active (running) since Mon 2026-01-19 14:13:11 PST; 1h 25min ago
+   Main PID: 37219 (DisplayLinkMana)
+      Tasks: 45 (limit: 23287)
+     Memory: 31.4M (peak: 32.3M)
+        CPU: 15.335s
+     CGroup: /system.slice/displaylink-driver.service
+             └─37219 /opt/displaylink/DisplayLinkManager
+
+Jan 19 14:13:11 AlphaCodex systemd[1]: Starting displaylink-driver.service - DisplayLink Driver Service...
+Jan 19 14:13:11 AlphaCodex systemd[1]: Started displaylink-driver.service - DisplayLink Driver Service.
+Monitors: 3
+ 0: +*eDP-1 1920/340x1080/190+747+1080  eDP-1
+ 1: +HDMI-1 1920/330x1080/230+0+0  HDMI-1
+ 2: +DVI-I-1 1366/340x768/190+1920+312  DVI-I-1
+
+[D] install tuned power profiles (safe defaults)...
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Reading package lists...
+Building dependency tree...
+Reading state information...
+power-profiles-daemon is already the newest version (0.21-1ubuntu1).
+The following packages were automatically installed and are no longer required:
+  libgl1-amber-dri libglapi-mesa libllvm19
+Use 'sudo apt autoremove' to remove them.
+0 upgraded, 0 newly installed, 0 to remove and 1 not upgraded.
+
+=== Done ===
+Log: /home/valthezar/Projects/Scripts/ubuntu-setup/logs/ubuntu_optimize_2026-01-19_153843.log
+
+[E] Safe cleanup + upgrade status...
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Reading package lists...
+Building dependency tree...
+Reading state information...
+The following packages will be REMOVED:
+  libgl1-amber-dri libglapi-mesa libllvm19
+0 upgraded, 0 newly installed, 3 to remove and 0 not upgraded.
+After this operation, 145 MB disk space will be freed.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 177252 files and directories currently installed.)
+Removing libgl1-amber-dri:amd64 (21.3.9-0ubuntu2) ...
+Removing libglapi-mesa:amd64 (24.2.8-1ubuntu1~24.04.1) ...
+Removing libllvm19:amd64 (1:19.1.1-1ubuntu1~24.04.2) ...
+Processing triggers for libc-bin (2.39-0ubuntu8.6) ...
+
+[E] Packages held back (if any):
+Listing...
+
+NOTE: If kernel/graphics packages upgraded, reboot is recommended.

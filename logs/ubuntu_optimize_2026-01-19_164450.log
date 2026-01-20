@@ -1,0 +1,109 @@
+=== Ubuntu baseline optimization start ===
+Time: 2026-01-19T16:44:50-08:00
+Host: AlphaCodex
+Kernel: 6.14.0-37-generic
+
+[A] Update system and install baseline packages...
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Hit:1 https://www.synaptics.com/sites/default/files/Ubuntu stable InRelease
+Hit:2 http://security.ubuntu.com/ubuntu noble-security InRelease
+Get:3 https://esm.ubuntu.com/apps/ubuntu noble-apps-security InRelease [8371 B]
+Get:4 https://esm.ubuntu.com/apps/ubuntu noble-apps-updates InRelease [8220 B]
+Get:5 https://esm.ubuntu.com/infra/ubuntu noble-infra-security InRelease [8214 B]
+Hit:6 http://us.archive.ubuntu.com/ubuntu noble InRelease
+Get:7 https://esm.ubuntu.com/infra/ubuntu noble-infra-updates InRelease [8213 B]
+Hit:8 http://us.archive.ubuntu.com/ubuntu noble-updates InRelease
+Hit:9 http://us.archive.ubuntu.com/ubuntu noble-backports InRelease
+Fetched 33.0 kB in 2s (19.4 kB/s)
+Reading package lists...
+Building dependency tree...
+Reading state information...
+All packages are up to date.
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Reading package lists...
+Building dependency tree...
+Reading state information...
+Calculating upgrade...
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Reading package lists...
+Building dependency tree...
+Reading state information...
+git is already the newest version (1:2.43.0-1ubuntu7.3).
+curl is already the newest version (8.5.0-2ubuntu10.6).
+wget is already the newest version (1.21.4-1ubuntu4.1).
+unzip is already the newest version (6.0-28ubuntu4.1).
+zip is already the newest version (3.0-13ubuntu0.2).
+ca-certificates is already the newest version (20240203).
+gnupg is already the newest version (2.4.4-2ubuntu17.4).
+build-essential is already the newest version (12.10ubuntu1).
+pkg-config is already the newest version (1.8.1-2build1).
+python3 is already the newest version (3.12.3-0ubuntu2.1).
+python3-pip is already the newest version (24.0+dfsg-1ubuntu1.3).
+python3-venv is already the newest version (3.12.3-0ubuntu2.1).
+pipx is already the newest version (1.4.3-1).
+htop is already the newest version (3.3.0-4build1).
+iotop is already the newest version (0.6-42-ga14256a-0.2build1).
+iftop is already the newest version (1.0~pre4-9build2).
+lm-sensors is already the newest version (1:3.6.0-9build1).
+smartmontools is already the newest version (7.4-2build1).
+network-manager is already the newest version (1.46.0-1ubuntu2.5).
+fonts-firacode is already the newest version (6.2-2).
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+
+[B] Enable useful services...
+
+[C] Display/graphics status checks...
+● displaylink-driver.service - DisplayLink Driver Service
+     Loaded: loaded (/usr/lib/systemd/system/displaylink-driver.service; static)
+     Active: active (running) since Mon 2026-01-19 14:13:11 PST; 2h 31min ago
+   Main PID: 37219 (DisplayLinkMana)
+      Tasks: 45 (limit: 23287)
+     Memory: 32.1M (peak: 33.5M)
+        CPU: 1min 7.416s
+     CGroup: /system.slice/displaylink-driver.service
+             └─37219 /opt/displaylink/DisplayLinkManager
+
+Jan 19 14:13:11 AlphaCodex systemd[1]: Starting displaylink-driver.service - DisplayLink Driver Service...
+Jan 19 14:13:11 AlphaCodex systemd[1]: Started displaylink-driver.service - DisplayLink Driver Service.
+Monitors: 3
+ 0: +*eDP-1 1920/340x1080/190+747+1080  eDP-1
+ 1: +HDMI-1 1920/330x1080/230+0+0  HDMI-1
+ 2: +DVI-I-1 1366/340x768/190+1920+312  DVI-I-1
+
+[D] install tuned power profiles (safe defaults)...
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Reading package lists...
+Building dependency tree...
+Reading state information...
+power-profiles-daemon is already the newest version (0.21-1ubuntu1).
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+
+=== Done ===
+Log: /home/valthezar/Projects/Scripts/ubuntu-setup/logs/ubuntu_optimize_2026-01-19_164450.log
+
+[E] Safe cleanup + upgrade status...
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Reading package lists...
+Building dependency tree...
+Reading state information...
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+
+[E] Packages held back (if any):
+Listing...
+
+NOTE: If kernel/graphics packages upgraded, reboot is recommended.
+
+[F] Restore GNOME monitor layout (Wayland)...
+Applied: /home/valthezar/.config/monitors.xml
+NOTE: You must log out and log back in (or reboot) for changes to fully apply.
