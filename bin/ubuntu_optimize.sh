@@ -96,17 +96,31 @@ else
   echo "SKIP: powerprofilesctl not found"
 fi
 
-# ---- H) zram swap tuning (responsiveness) ----
+# ---- H) Swap optimization (zram + disable disk swapfile) ----
 echo
-echo "[H] zram swap tuning..."
+echo "[H] Swap optimization (zram + disable disk swapfile)..."
+
+# Ensure zram uses 25% of RAM
 if [[ -f /etc/default/zramswap ]]; then
   sudo sed -i.bak 's/^#PERCENT=.*/PERCENT=25/' /etc/default/zramswap
   sudo sed -i.bak 's/^PERCENT=.*/PERCENT=25/' /etc/default/zramswap
   sudo systemctl restart zramswap || true
-  swapon --show || true
 else
   echo "SKIP: /etc/default/zramswap not found"
 fi
+
+# Disable disk swapfile for responsiveness (keep zram)
+if swapon --show | awk '{print $1}' | grep -qx '/swap.img'; then
+  sudo swapoff /swap.img || true
+fi
+
+# Comment out any active /swap.img entry in /etc/fstab (handles leading whitespace)
+if grep -qE '^[[:space:]]*/swap\.img[[:space:]]' /etc/fstab; then
+  sudo sed -i.bak '/^[[:space:]]*\/swap\.img[[:space:]]/ s/^/# /' /etc/fstab
+fi
+
+# Report final swap state
+swapon --show || true
 
 # ---- I) Security baseline: UFW firewall ----
 echo
@@ -116,3 +130,11 @@ sudo ufw default deny incoming
 sudo ufw default allow outgoing
 sudo ufw --force enable
 sudo ufw status verbose || true
+
+
+# ---- J) Security baseline: unattended security updates ----
+echo
+echo "[J] Security baseline: unattended-upgrades..."
+sudo apt -y install unattended-upgrades
+sudo systemctl enable --now unattended-upgrades || true
+systemctl status unattended-upgrades --no-pager || true

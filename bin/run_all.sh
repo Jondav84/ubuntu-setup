@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+BASE_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+
 echo "[1/2] Running Ubuntu optimization..."
-"${HOME}/Projects/Scripts/ubuntu-setup/bin/ubuntu_optimize.sh"
+"${BASE_DIR}/bin/ubuntu_optimize.sh"
 
 echo
 echo "[2/2] Re-applying GNOME monitor layout (Wayland)..."
-MON_SRC="${HOME}/Projects/Scripts/ubuntu-setup/config/monitors.xml"
+MON_SRC="${BASE_DIR}/config/monitors.xml"
 MON_DST="${HOME}/.config/monitors.xml"
 mkdir -p "${HOME}/.config"
 if [[ -f "${MON_SRC}" ]]; then
