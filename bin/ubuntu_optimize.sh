@@ -95,3 +95,15 @@ if command -v powerprofilesctl >/dev/null 2>&1; then
 else
   echo "SKIP: powerprofilesctl not found"
 fi
+
+# ---- H) zram swap tuning (responsiveness) ----
+echo
+echo "[H] zram swap tuning..."
+if [[ -f /etc/default/zramswap ]]; then
+  sudo sed -i.bak 's/^#PERCENT=.*/PERCENT=25/' /etc/default/zramswap
+  sudo sed -i.bak 's/^PERCENT=.*/PERCENT=25/' /etc/default/zramswap
+  sudo systemctl restart zramswap || true
+  swapon --show || true
+else
+  echo "SKIP: /etc/default/zramswap not found"
+fi
