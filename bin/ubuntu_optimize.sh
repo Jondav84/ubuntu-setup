@@ -107,3 +107,12 @@ if [[ -f /etc/default/zramswap ]]; then
 else
   echo "SKIP: /etc/default/zramswap not found"
 fi
+
+# ---- I) Security baseline: UFW firewall ----
+echo
+echo "[I] Security baseline: UFW..."
+sudo apt -y install ufw
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw --force enable
+sudo ufw status verbose || true
