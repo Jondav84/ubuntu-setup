@@ -218,3 +218,19 @@ echo
 echo "[P] disable fwupd-refresh-timer (manual firmware updates)..."
 sudo systemctl disable --now fwupd-refresh.timer || true
 systemctl status fwupd-refresh.timer --no-pager || true
+
+# ---- Q) CPU tuning: TLP performance on AC ----
+echo
+echo "[Q] CPU tuning: configure TLP for performance on AC..."
+sudo apt -y install tlp tlp-rdw
+sudo systemctl enable --now tlp || true
+
+sudo sed -i.bak \
+  -e 's/^#\?CPU_SCALING_GOVERNOR_ON_AC=.*/CPU_SCALING_GOVERNOR_ON_AC=performance/' \
+  -e 's/^#\?CPU_SCALING_GOVERNOR_ON_BAT=.*/CPU_SCALING_GOVERNOR_ON_BAT=powersave/' \
+  -e 's/^#\?CPU_ENERGY_PERF_POLICY_ON_AC=.*/CPU_ENERGY_PERF_POLICY_ON_AC=performance/' \
+  -e 's/^#\?CPU_ENERGY_PERF_POLICY_ON_BAT=.*/CPU_ENERGY_PERF_POLICY_ON_BAT=balance_power/' \
+  /etc/tlp.conf
+
+sudo tlp start || true
+sudo tlp-stat -p | sed -n '1,40p' || true
