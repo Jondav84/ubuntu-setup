@@ -258,3 +258,17 @@ sudo ufw deny in proto udp to 224.0.0.251 port 5353 comment "Block mDNS multicas
 sudo ufw deny in proto udp to ff02::fb port 5353 comment "Block mDNS multicast IPv6" || true
 
 sudo ufw status numbered || true
+
+# ---- T) GNOME responsiveness: disable ubuntu-report + tracker indexing ----
+echo
+echo "[T] GNOME responsiveness: disable ubuntu-report + tracker indexing..."
+
+# ubuntu-report (user service)
+systemctl --user mask ubuntu-report.path ubuntu-report.service 2>/dev/null || true
+
+# tracker file indexer (user service)
+systemctl --user mask tracker-miner-fs-3.service 2>/dev/null || true
+
+# status checks (non-fatal)
+systemctl --user status ubuntu-report.path --no-pager 2>/dev/null || true
+systemctl --user status tracker-miner-fs-3.service --no-pager 2>/dev/null || true
