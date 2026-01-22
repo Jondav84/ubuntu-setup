@@ -212,3 +212,9 @@ hash -r 2>/dev/null || true
 
 # 6) Verification (non-fatal)
 command -v snap >/dev/null 2>&1 && echo "WARN: snap still present in PATH" || echo "OK: snap removed"
+
+# ---- P) Reduce background activity: disable fwupd auto-refresh timer ----
+echo
+echo "[P] disable fwupd-refresh-timer (manual firmware updates)..."
+sudo systemctl disable --now fwupd-refresh.timer || true
+systemctl status fwupd-refresh.timer --no-pager || true
