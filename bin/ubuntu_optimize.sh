@@ -138,3 +138,77 @@ echo "[J] Security baseline: unattended-upgrades..."
 sudo apt -y install unattended-upgrades
 sudo systemctl enable --now unattended-upgrades || true
 systemctl status unattended-upgrades --no-pager || true
+
+# ---- K) Security hardening: fail2ban (sshd jail) ----
+echo
+echo "[K] Security hardening: fail2ban..."
+sudo apt -y install fail2ban
+sudo systemctl enable --now fail2ban || true
+
+# Enable sshd jail
+if [[ ! -f /etc/fail2ban/jail.local ]]; then
+  sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
+fi
+sudo sed -i '/^\[sshd\]/,/^\[/{s/^enabled\s*=.*/enabled = true/}' /etc/fail2ban/jail.local
+
+sudo systemctl restart fail2ban || true
+sudo fail2ban-client status || true
+
+# ---- M) Boot optimization disable NetworkManager wait online ----
+echo
+echo "[M] Boot optimization: disable NetworkManager wait-online..."
+sudo systemctl disable --now NetworkManager-wait-online.service || true
+systemctl status NetworkManager-wait-online.service --no-pager || true
+
+# ---- N) Boot optimization: remove plymouth quit-wait delay ----
+echo
+echo "[N] Boot optimization: mask plymouth-quit-wait..."
+sudo systemctl mask plymouth-quit-wait.service || true
+systemctl status plymouth-quit-wait.service --no-pager || true
+
+# ---- O) Background noise reduction: disable apport/whoopsie ----
+echo
+echo "[O] Disable crash reporting (apport/whoopsie)..."
+sudo systemctl disable --now apport.service || true
+sudo systemctl disable --now whoopsie.path || true
+sudo systemctl disable --now whoopsie.service || true
+systemctl status apport.service --no-pager || true
+systemctl status whoopsie.service --no-pager || true
+
+# ---- L) Native-only preference: remove Snap completely ----
+echo
+echo "[L] Remove Snap completely (native-only preference)..."
+
+# 1) Stop/disable snapd systemd units (safe even if not present)
+sudo systemctl disable --now snapd.service snapd.socket snapd.seeded.service 2>/dev/null || true
+
+# 2) If snap CLI exists, remove all installed snaps (apps + bases), then snapd itself
+if command -v snap >/dev/null 2>&1; then
+  # Remove everything except snapd first (dependency-safe by repeated passes)
+  for pass in 1 2 3 4; do
+    mapfile -t snaps < <(snap list 2>/dev/null | awk 'NR>1 {print $1}' | sort -u || true)
+    # If list is empty, break
+    [[ ${#snaps[@]} -eq 0 ]] && break
+
+    for s in "${snaps[@]}"; do
+      [[ "${s}" == "snapd" ]] && continue
+      sudo snap remove --purge "${s}" 2>/dev/null || true
+    done
+  done
+
+  # Now remove snapd snap last
+  sudo snap remove --purge snapd 2>/dev/null || true
+fi
+
+# 3) Purge the Debian package (may also remove transitional firefox/thunderbird snap stubs)
+sudo apt -y purge snapd 2>/dev/null || true
+
+# 4) Remove leftovers (safe even if already deleted)
+sudo rm -rf "${HOME}/snap" /snap /var/snap /var/lib/snapd 2>/dev/null || true
+
+# 5) Cleanup + clear shell command cache
+sudo apt -y autoremove 2>/dev/null || true
+hash -r 2>/dev/null || true
+
+# 6) Verification (non-fatal)
+command -v snap >/dev/null 2>&1 && echo "WARN: snap still present in PATH" || echo "OK: snap removed"
