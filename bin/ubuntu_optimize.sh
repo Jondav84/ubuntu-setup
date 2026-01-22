@@ -234,3 +234,14 @@ sudo sed -i.bak \
 
 sudo tlp start || true
 sudo tlp-stat -p | sed -n '1,40p' || true
+
+# ---- R) Disk optimization: enable noatime on root filesystem ----
+echo
+echo "[R] Disk optimization: enable noatime on / ..."
+sudo cp /etcfstab /ect/fstab.bak || true
+if grep -qE '^\s*UUID=.*\s+/\s+ext4\s+' /etc/fstab; then
+  sudo sed -i -E 's/^(\s*UUID=.*\s+\/\s+ext4\s+)([^[:space:]]+)/\1\2,noatime/' /etc/fstab
+fi
+sudo systemctl daemon-reload || true
+sudo mount -o remount / || true
+findmnt -no SOURCE,TARGET,FSTYPE,OPTIONS / || true
