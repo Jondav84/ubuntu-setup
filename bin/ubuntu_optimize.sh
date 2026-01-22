@@ -245,3 +245,16 @@ fi
 sudo systemctl daemon-reload || true
 sudo mount -o remount / || true
 findmnt -no SOURCE,TARGET,FSTYPE,OPTIONS / || true
+
+# ---- S) UFW hardening: block mDNS multicast ----
+echo
+echo "[S] UFW hardening: block mDNS multicast..."
+sudo apt -y install ufw
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw --force enable
+
+sudo ufw deny in proto udp to 224.0.0.251 port 5353 comment "Block mDNS multicast" || true
+sudo ufw deny in proto udp to ff02::fb port 5353 comment "Block mDNS multicast IPv6" || true
+
+sudo ufw status numbered || true
