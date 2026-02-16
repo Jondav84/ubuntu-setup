@@ -1,7 +1,1 @@
-# local logs
-logs/*.log
-
-# temp/editor noise
-*.swp
-*,tmp
-.DS_Store
+config/
